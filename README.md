@@ -1,0 +1,2 @@
+# NejakejTestCiCo
+pomoc
