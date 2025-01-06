@@ -122,29 +122,3 @@ li p {
         opacity: 0;
     }
 }
-
-/* Styl pro tlačítko Upravit */
-button[type="button"]:nth-child(1) {
-    background-color: #ff9800; /* Oranžová */
-}
-
-button[type="button"]:nth-child(1):hover {
-    background-color: #fb8c00;
-}
-
-button[type="button"]:nth-child(1):active {
-    background-color: #f57c00;
-}
-
-/* Styl pro tlačítko Smazat */
-button[type="button"]:nth-child(2) {
-    background-color: #f44336; /* Červená */
-}
-
-button[type="button"]:nth-child(2):hover {
-    background-color: #e53935;
-}
-
-button[type="button"]:nth-child(2):active {
-    background-color: #d32f2f;
-}

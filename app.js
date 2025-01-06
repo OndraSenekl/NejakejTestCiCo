@@ -12,29 +12,43 @@ function Uloz() {
     let ciltext = document.getElementById("cilInput").value.trim();
     let delkaCile = document.getElementById("delkaCile").value;
 
-    if (ciltext) {
+    // Rozdělíme zadané cíle na jednotlivé položky podle čárky
+    let cilArray = ciltext.split(',').map(item => item.trim());
+
+    // Uložíme cíle do sessionStorage podle délky cíle (krátkodobé, střednědobé, dlouhodobé)
+    if (cilArray.length > 0) {
         if (delkaCile === "1") {
-            sessionStorage.setItem("cil1", ciltext); // Krátkodobé
+            sessionStorage.setItem("cil1", JSON.stringify(cilArray)); // Krátkodobé
         } else if (delkaCile === "2") {
-            sessionStorage.setItem("cil2", ciltext); // Střednědobé
+            sessionStorage.setItem("cil2", JSON.stringify(cilArray)); // Střednědobé
         } else if (delkaCile === "3") {
-            sessionStorage.setItem("cil3", ciltext); // Dlouhodobé
+            sessionStorage.setItem("cil3", JSON.stringify(cilArray)); // Dlouhodobé
         }
     }
 
-    // Zobrazíme cíl na stránce pro každou kategorii
-    document.getElementById("cil1").textContent = sessionStorage.getItem("cil1") || "Žádný cíl nebyl nastaven.";
-    document.getElementById("cil2").textContent = sessionStorage.getItem("cil2") || "Žádný cíl nebyl nastaven.";
-    document.getElementById("cil3").textContent = sessionStorage.getItem("cil3") || "Žádný cíl nebyl nastaven.";
+    // Aktualizujeme zobrazení cílů na stránce
+    ZobrazCile();
+}
+
+function ZobrazCile() {
+    // Načteme uložené cíle z sessionStorage
+    let cil1 = JSON.parse(sessionStorage.getItem("cil1")) || [];
+    let cil2 = JSON.parse(sessionStorage.getItem("cil2")) || [];
+    let cil3 = JSON.parse(sessionStorage.getItem("cil3")) || [];
+
+    // Aktualizujeme text na stránce pro každou kategorii
+    document.getElementById("cil1").querySelector('p').textContent = cil1.length > 0 ? cil1.join(', ') : "Žádný cíl nebyl nastaven.";
+    document.getElementById("cil2").querySelector('p').textContent = cil2.length > 0 ? cil2.join(', ') : "Žádný cíl nebyl nastaven.";
+    document.getElementById("cil3").querySelector('p').textContent = cil3.length > 0 ? cil3.join(', ') : "Žádný cíl nebyl nastaven.";
 }
 
 function UpravitCil(cilId) {
     let cilKey = "cil" + cilId;
-    let cilText = sessionStorage.getItem(cilKey);
+    let cilText = JSON.parse(sessionStorage.getItem(cilKey));
 
-    if (cilText && confirm("Chceš upravit tento cíl?")) {
-        // Načteme existující cíl do formuláře
-        document.getElementById("cilInput").value = cilText;
+    if (cilText && cilText.length > 0 && confirm("Chceš upravit tento cíl?")) {
+        // Načteme existující cíle do formuláře
+        document.getElementById("cilInput").value = cilText.join(', ');
         document.getElementById("delkaCile").value = cilId; // Nastavíme odpovídající délku cíle
         ZmenStranku1(); // Přejdeme na stránku pro zadání nového cíle
     } else {
@@ -50,7 +64,7 @@ function SmazatCil(cilId) {
             // Smažeme cíl
             sessionStorage.removeItem(cilKey);
             // Aktualizujeme zobrazení na stránce
-            document.getElementById(cilKey).textContent = "Žádný cíl nebyl nastaven.";
+            ZobrazCile();
         }
     } else {
         alert("Pro tuto kategorii není žádný cíl nastaven.");
@@ -59,7 +73,5 @@ function SmazatCil(cilId) {
 
 window.onload = function() {
     // Načteme a zobrazíme uložené cíle při načtení stránky
-    document.getElementById("cil1").textContent = sessionStorage.getItem("cil1") || "Žádný cíl nebyl nastaven.";
-    document.getElementById("cil2").textContent = sessionStorage.getItem("cil2") || "Žádný cíl nebyl nastaven.";
-    document.getElementById("cil3").textContent = sessionStorage.getItem("cil3") || "Žádný cíl nebyl nastaven.";
+    ZobrazCile();
 }
