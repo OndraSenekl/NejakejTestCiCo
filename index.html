@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cile</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+
+    <div id="strana" class="page_visible">
+        <h1>Moje cile</h1>
+        <ul>
+            <label for="cil1">Krátkodobé:</label>
+            <li id="cil1">
+                <p>Žádný cíl nebyl nastaven.</p>
+                <button type="button" onclick="UpravitCil(1)">Upravit</button>
+                <button type="button" onclick="SmazatCil(1)">Smazat</button>
+            </li>
+            <label for="cil2">Střednědobé:</label>
+            <li id="cil2">
+                <p>Žádný cíl nebyl nastaven.</p>
+                <button type="button" onclick="UpravitCil(2)">Upravit</button>
+                <button type="button" onclick="SmazatCil(2)">Smazat</button>
+            </li>
+            <label for="cil3">Dlouhodobé:</label>
+            <li id="cil3">
+                <p>Žádný cíl nebyl nastaven.</p>
+                <button type="button" onclick="UpravitCil(3)">Upravit</button>
+                <button type="button" onclick="SmazatCil(3)">Smazat</button>
+            </li>
+        </ul>
+        <button type="button" onclick="ZmenStranku1()">Nastavení</button>
+    </div>
+
+    <div id="strana1" class="page">
+        <p>Napiš svůj cíl:</p>
+        <form>
+            <input type="text" id="cilInput" placeholder="napis cil">
+            <select name="delkaCile" id="delkaCile">
+                <option id="moznost1" value="1">Krátkodobé (1 měsíc)</option>
+                <option id="moznost2" value="2">Střednědobé (1 rok)</option>
+                <option id="moznost3" value="3">Dlouhodobé (5 let)</option>
+            </select>
+        </form>
+        <button type="button" onclick="ZmenStranku2()">Zpět</button>
+        <button type="button" onclick="Uloz()">Uložit</button>
+    </div>
+
+</body>
+</html>
